@@ -3,21 +3,21 @@ import time
 
 class Drive:
     def __init__(self):
-        # 핀 설정 (PDF source 38 참고)
+        # 핀 설정 
         self.pins = {
             "SW1": 5, "SW2": 6, "SW3": 13, "SW4": 19,
             "PWMA": 18, "AIN1": 22, "AIN2": 27,
             "PWMB": 23, "BIN1": 25, "BIN2": 24
         }
         self.config_GPIO()
-        # PWM 설정 (PDF source 38 참고)
+        # PWM 설정 
         self.L_Motor = GPIO.PWM(self.pins["PWMA"], 500)
         self.L_Motor.start(0)
         self.R_Motor = GPIO.PWM(self.pins["PWMB"], 500)
         self.R_Motor.start(0)
 
     def config_GPIO(self):
-        # GPIO 모드 및 출력 설정 (PDF source 40 참고)
+        # GPIO 모드 및 출력 설정
         GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.pins["SW1"], GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
@@ -32,7 +32,7 @@ class Drive:
         GPIO.setup(self.pins["BIN2"], GPIO.OUT)
 
     def motor_go(self, speed):
-        # 직진 (PDF source 47 참고)
+        # 직진 
         GPIO.output(self.pins["AIN1"], 0)
         GPIO.output(self.pins["AIN2"], 1)
         self.L_Motor.ChangeDutyCycle(speed)
@@ -41,7 +41,7 @@ class Drive:
         self.R_Motor.ChangeDutyCycle(speed)
 
     def motor_back(self, speed):
-        # 후진 (PDF source 51 참고)
+        # 후진 
         GPIO.output(self.pins["AIN1"], 1)
         GPIO.output(self.pins["AIN2"], 0)
         self.L_Motor.ChangeDutyCycle(speed)
@@ -50,7 +50,7 @@ class Drive:
         self.R_Motor.ChangeDutyCycle(speed)
 
     def motor_left(self, speed):
-        # 좌회전 (PDF source 55 참고)
+        # 좌회전
         GPIO.output(self.pins["AIN1"], 1)
         GPIO.output(self.pins["AIN2"], 0)
         self.L_Motor.ChangeDutyCycle(speed)
@@ -59,7 +59,7 @@ class Drive:
         self.R_Motor.ChangeDutyCycle(speed)
 
     def motor_right(self, speed):
-        # 우회전 (PDF source 57 참고)
+        # 우회전 
         GPIO.output(self.pins["AIN1"], 0)
         GPIO.output(self.pins["AIN2"], 1)
         self.L_Motor.ChangeDutyCycle(speed)
