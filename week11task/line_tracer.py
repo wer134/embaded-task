@@ -6,7 +6,7 @@ import SDCar
 # --- 전역 변수 설정 ---
 v_x = 320
 v_y = 240
-# 화면을 10등분하는 그리드 (강의자료 Page 22) [cite: 55]
+
 v_x_grid = [int(v_x * i / 10) for i in range(1, 10)] 
 
 moment = np.array([0, 0, 0])
@@ -17,7 +17,6 @@ speed = 30  # 속도
 # 자동차 객체 생성
 car = SDCar.Drive()
 
-# --- 스레드 함수 (강의자료 Page 9) [cite: 30] ---
 # 1초마다 alive!!를 출력하여 프로그램이 동작 중임을 터미널에 표시
 def func_thread():
     i = 0
@@ -28,7 +27,7 @@ def func_thread():
         if is_running is False:
             break
 
-# --- 영상 처리 함수 (HSV 변환) (강의자료 Page 15) [cite: 45] ---
+# --- 영상 처리 함수 (HSV 변환) 
 def detect_maskY_HSV(frame):
     crop_hsv = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
     crop_hsv = cv.GaussianBlur(crop_hsv, (5, 5), cv.BORDER_DEFAULT)
@@ -36,7 +35,7 @@ def detect_maskY_HSV(frame):
     mask_Y = cv.inRange(crop_hsv, (25, 50, 100), (35, 255, 255))
     return mask_Y
 
-# --- 라인 트레이싱 주행 로직 (강의자료 Page 23) [cite: 57] ---
+# --- 라인 트레이싱 주행 로직 
 def line_tracing(cx):
     global v_x_grid
     
@@ -54,12 +53,12 @@ def line_tracing(cx):
         car.motor_go(speed)
         print('go (exception)')
 
-# --- 키 입력 처리 함수 (강의자료 Page 21 변형) [cite: 54] ---
+# --- 키 입력 처리 함수 
 def key_cmd(which_key):
     global enable_linetracing, is_running
     is_exit = False
     
-    print('which_key', which_key) # 키 코드 출력 (제어화면 요구사항)
+    print('which_key', which_key) 
 
     # 'q' 키: 프로그램 종료
     if which_key & 0xFF == ord('q'):
@@ -89,7 +88,7 @@ def main():
     camera.set(cv.CAP_PROP_FRAME_WIDTH, v_x)
     camera.set(cv.CAP_PROP_FRAME_HEIGHT, v_y)
 
-    # 스레드 시작 (강의자료 Page 8) [cite: 27]
+    # 스레드 시작 
     t_task1 = threading.Thread(target=func_thread)
     t_task1.start()
 
